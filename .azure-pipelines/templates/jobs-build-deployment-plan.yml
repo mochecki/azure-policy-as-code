@@ -1,0 +1,34 @@
+parameters:
+  - name: jobName
+    type: string 
+
+  - name: serviceConnection
+    type: string
+
+  - name: environment
+    type: string
+
+  - name: publishPlan
+    type: boolean
+    default: false
+
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: 'Plan ${{ parameters.environment }}'
+  steps:
+    - checkout: self
+    - task: AzurePowerShell@5
+      name: planStep
+      displayName: Plan
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        pwsh: true
+        azurePowerShellVersion: LatestVersion
+        ScriptPath: "Script/Deploy/Build-DeploymentPlans.ps1"
+        ScriptArguments: 
+          -pacEnvironmentSelector  ${{ parameters.environment }} `
+          -devOpsType "ado" `
+          -InformationAction Continue 
+    - publish: "$(PAC_OUTPUT_FOLDER)/plans-${{ parameters.environment }}"
+      artifact: "plans-${{ parameters.environment }}"
+      condition: and(succeeded(), eq(variables['planStep.deployPolicyChanges'], 'yes'), eq('${{ parameters.publishPlan }}', 'true'))
