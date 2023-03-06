@@ -14,14 +14,14 @@ stages:
   - stage: plan
     displayName: Plan
     jobs:
-      - template: jobs-build-deployment-plan.yml
+      - template: templates/jobs-build-deployment-plan.yml
         parameters:
           serviceConnection: $(developmentServiceConnection)
           jobName: 'jobPlanDevelopment'
           environment: 'development'
           publishPlan: false
 
-      - template: jobs-build-deployment-plan.yml
+      - template: templates/jobs-build-deployment-plan.yml
         parameters:
           serviceConnection: $(productionServiceConnection)
           jobName: 'jobPlanProduction'
