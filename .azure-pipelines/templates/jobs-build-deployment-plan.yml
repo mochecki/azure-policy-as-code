@@ -24,7 +24,7 @@ jobs:
         azureSubscription: ${{ parameters.serviceConnection }}
         pwsh: true
         azurePowerShellVersion: LatestVersion
-        ScriptPath: "Script/Deploy/Build-DeploymentPlans.ps1"
+        ScriptPath: "Scripts/Deploy/Build-DeploymentPlans.ps1"
         ScriptArguments: 
           -pacEnvironmentSelector  ${{ parameters.environment }} `
           -devOpsType "ado" `
