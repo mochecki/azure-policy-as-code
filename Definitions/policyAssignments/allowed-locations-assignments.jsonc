@@ -1,0 +1,24 @@
+{
+    "nodeName": "/Loc/",
+    "assignment": {
+        "name": "allowed-locations",
+        "displayName": "Allowed Locations",
+        "description": "Sets the allowed locations"
+    },
+    "definitionEntry": {
+        "policySetName": "general-allowed-locations-policy-set",
+    },
+    "parameters": {
+        "AllowedLocations": [
+            "westeurope"
+        ]
+    },
+    "scope": {
+        "development": [
+            "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+        ],
+        "production": [
+            "/providers/Microsoft.Management/managementGroups/mg-identity"
+        ]
+    }
+}

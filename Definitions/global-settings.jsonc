@@ -1,0 +1,28 @@
+{
+    "pacOwnerId": "11111111-2222-3333-4444-555555555555",
+    "pacEnvironments": [
+        {
+            "pacSelector": "development",
+            "cloud": "AzureCloud",
+            "tenantId": "10b8675c-2742-4319-8b35-e3f8a3dc31d4",
+            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+        },
+        {
+            "pacSelector": "production",
+            "cloud": "AzureCloud",
+            "tenantId": "10b8675c-2742-4319-8b35-e3f8a3dc31d4",
+            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/mg-moc-root"
+        }
+    ],
+    "managedIdentityLocations": {
+        "*": "westeurope"
+    },
+    "globalNotScopes": {
+        "*": [
+            "/resourceGroupPatterns/excluded-rg*",
+        ],
+        "tenant": [
+            "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+        ]
+    }
+}
