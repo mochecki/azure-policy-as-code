@@ -1,0 +1,38 @@
+name: Policy_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+
+# trigger: 
+# pr:
+
+variables: 
+  PAC_OUTPUT_FOLDER: ./Output
+  PAC_DEFINITIONS_FOLDER: ./Definitions
+
+  developmentServiceConnection: 'sc-epac-dev'
+  productionServiceConnection: 'sc-epac-dev'
+
+stages:
+  - stage: planStage
+    displayName: Plan
+    jobs:
+      - template: templates/jobs-build-deployment-plan.yml
+        parameters:
+          serviceConnection: $(developmentServiceConnection)
+          jobName: 'jobPlanDevelopment'
+          environment: 'development'
+
+      - template: templates/jobs-build-deployment-plan.yml
+        parameters:
+          serviceConnection: $(productionServiceConnection)
+          jobName: 'jobPlanProduction'
+          environment: 'production'
+  
+  - stage: deployDevelopmentStage
+    displayName: Deploy Policy - development
+    dependsOn:
+      - planStage
+    condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanDevelopment.planStep.deployPolicyChanges'], 'yes'))
+    jobs:
+      - template: templates/job-deploy-policies.yml
+        parameters:
+          serviceConnection: $(developmentServiceConnection)
+          environment: 'development'

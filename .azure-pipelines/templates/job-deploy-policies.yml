@@ -1,0 +1,29 @@
+parameter:
+  - name: serviceConnection
+    type: string
+
+  - name: environment
+    type: string
+
+jobs:
+  - deployment: deployPolicyJob
+    environment: pac-policy-${{ parameters.environment }}
+    variables:
+      PAC_INPUT_FOLDER: "$(Pipeline.Workspace)"
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - download: current
+              artifact: plans-${{ parameters.environment }}
+            - task: AzurePowerShell@5
+              name: deployStep
+              displayName: Deploy policy
+              inputs:
+                azureSubscription: ${{ parameters.serviceConnection }}
+                pwsh: true
+                azurePowerShellVersion: LatestVersion
+                ScriptPath: "Scripts/Deploy/Deploy-PolicyPlan.ps1" 
+                ScriptArguments: 
+                  -pacEnvironmentSelector ${{ parameters.environment }}
+                  -InformationAction Continue

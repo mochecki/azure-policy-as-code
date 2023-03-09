@@ -10,7 +10,7 @@ parameters:
 
   - name: publishPlan
     type: boolean
-    default: false
+    default: true
 
 jobs:
 - job: ${{ parameters.jobName }}
