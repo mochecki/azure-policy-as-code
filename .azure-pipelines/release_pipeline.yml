@@ -36,3 +36,14 @@ stages:
         parameters:
           serviceConnection: $(developmentServiceConnection)
           environment: 'development'
+
+  - stage: deployRolesDevelopmentStage
+    displayName: Deploy roles - development
+    dependsOn:
+      - deployDevelopmentStage
+    condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanDevelopment.planStep.deployRoleChanges'], 'yes'))
+    jobs: 
+      - template: templates/job-deploy-roles.yml
+        parameters:
+          serviceConnection: $(developmentServiceConnection)
+          environment: 'development'

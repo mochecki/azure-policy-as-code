@@ -14,7 +14,7 @@ parameters:
 
 jobs:
 - job: ${{ parameters.jobName }}
-  displayName: 'Plan ${{ parameters.environment }}'
+  displayName: 'Plan - ${{ parameters.environment }}'
   steps:
     - checkout: self
     - task: AzurePowerShell@5
