@@ -21,7 +21,7 @@
         "*": [
             "/resourceGroupPatterns/excluded-rg*",
         ],
-        "tenant": [
+        "production": [
             "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
         ]
     }
