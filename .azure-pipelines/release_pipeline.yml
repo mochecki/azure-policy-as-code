@@ -59,8 +59,8 @@ stages:
           serviceConnection: $(productionServiceConnection)
           environment: 'production'
 
-  - stage: deployRolesDevelopmentStage
-    displayName: Deploy roles - development
+  - stage: deployRolesProductionStage
+    displayName: Deploy roles - production
     dependsOn:
       - deployProductionStage
     condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanProduction.planStep.deployRoleChanges'], 'yes'))
