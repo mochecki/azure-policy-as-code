@@ -1,0 +1,50 @@
+{
+    "nodeName": "/tags-environments/",
+    "definitionEntry": {
+        "policyName": "d157c373-a6c4-483d-aaad-570756956268",
+        "displayName": "Add or replace a tag on resource groups"
+    },
+    "parameters": {
+        "tagName": "Environment"
+    },
+    "children": [
+        {
+            "nodeName": "PROD",
+            "assignment": {
+                "name": "prod-env-tag",
+                "displayName": "Prod Environment Tag",
+                "description": "Set Tag Environment to PROD"
+            },
+            "parameters": {
+                "tagValue": "PROD"
+            },
+            "scope": {
+                "development": [
+                    "/providers/Microsoft.Management/managementGroups/mg-epac-dev-lz-prod"
+                ],
+                "production": [
+                    "/providers/Microsoft.Management/managementGroups/mg-landing-zones-prod"
+                ]
+            }
+        },
+        {
+            "nodeName": "NONPROD",
+            "assignment": {
+                "name": "prod-env-tag",
+                "displayName": "NonProd Environment Tag",
+                "description": "Set Tag Environment to NONPROD"
+            },
+            "parameters": {
+                "tagValue": "NONPROD"
+            },
+            "scope": {
+                "development": [
+                    "/providers/Microsoft.Management/managementGroups/mg-epac-dev-lz-nonprod"
+                ],
+                "production": [
+                    "/providers/Microsoft.Management/managementGroups/mg-landing-zones-nonprod"
+                ]
+            }
+        }
+    ]
+}
