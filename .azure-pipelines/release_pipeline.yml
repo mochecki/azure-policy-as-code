@@ -47,3 +47,25 @@ stages:
         parameters:
           serviceConnection: $(developmentServiceConnection)
           environment: 'development'
+
+  - stage: deployProductionStage
+    displayName: Deploy Policy - production
+    dependsOn:
+      - deployRolesDevelopmentStage
+    condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanProduction.planStep.deployPolicyChanges'], 'yes'))
+    jobs:
+      - template: templates/job-deploy-policies.yml
+        parameters:
+          serviceConnection: $(productionServiceConnection)
+          environment: 'production'
+
+  - stage: deployRolesDevelopmentStage
+    displayName: Deploy roles - development
+    dependsOn:
+      - deployProductionStage
+    condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanProduction.planStep.deployRoleChanges'], 'yes'))
+    jobs: 
+      - template: templates/job-deploy-roles.yml
+        parameters:
+          serviceConnection: $(productionServiceConnection)
+          environment: 'production'
