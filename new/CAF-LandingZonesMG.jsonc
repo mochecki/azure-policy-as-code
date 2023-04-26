@@ -1,0 +1,71 @@
+{
+    "nodeName": "/LandingZones/",
+    "scope": {
+        "TenantProd": [
+            "/providers/Microsoft.Management/managementGroups/mg-landing-zones"
+        ],
+        "ePAC-Test": [
+            "/providers/Microsoft.Management/managementGroups/mg-epac-test-landing-zones"
+        ]
+    },
+    "children": [
+        {
+            "nodeName": "Networking/",
+            "children": [
+                {
+                    "nodeName": "IPForwarding",
+                    "assignment": {
+                        "name": "Deny-IP-forwarding",
+                        "displayName": "Network interfaces should disable IP forwarding",
+                        "description": "This policy denies the network interfaces which enabled IP forwarding. The setting of IP forwarding disables Azure's check of the source and destination for a network interface. This should be reviewed by the network security team."
+                    },
+                    "definitionEntry": {
+                        "policyName": "88c0b9da-ce96-4b03-9635-f29a937e2900",
+                        "friendlyNameToDocumentIfGuid": "Deny IP Forwarding"
+                    }
+                },
+                {
+                    "nodeName": "NoNSG",
+                    "assignment": {
+                        "name": "Deny-Subnet-Without-Nsg",
+                        "displayName": "Subnets should have a Network Security Group",
+                        "description": "This policy denies the creation of a subnet without a Network Security Group to protect traffic across subnets."
+                    },
+                    "definitionEntry": {
+                        "policyName": "Deny-Subnet-Without-Nsg",
+                        "friendlyNameToDocumentIfGuid": "Deny Subnet without NSG"
+                    }
+                },
+                {
+                    "nodeName": "NoRDP",
+                    "assignment": {
+                        "name": "Deny-RDP-From-Internet",
+                        "displayName": "RDP access from the Internet should be blocked",
+                        "description": "This policy denies any network security rule that allows RDP access from Internet."
+                    },
+                    "definitionEntry": {
+                        "policyName": "Deny-RDP-From-Internet",
+                        "friendlyNameToDocumentIfGuid": "Deny RDP from Internet"
+                    }
+                }
+            ]
+        },
+        {
+            "nodeName": "Storage/",
+            "children": [
+                {
+                    "nodeName": "NoHTTP",
+                    "assignment": {
+                        "name": "Deny-Storage-http",
+                        "displayName": "Secure transfer to storage accounts should be enabled",
+                        "description": "Audit requirement of Secure transfer in your storage account. Secure transfer is an option that forces your storage account to accept requests only from secure connections (HTTPS). Use of HTTPS ensures authentication between the server and the service and protects data in transit from network layer attacks such as man-in-the-middle, eavesdropping, and session-hijacking"
+                    },
+                    "definitionEntry": {
+                        "policyName": "404c3081-a854-4457-ae30-26a93ef643f9",
+                        "friendlyNameToDocumentIfGuid": "Deny Storage HTTP"
+                    }
+                }
+            ]
+        }
+    ]
+}

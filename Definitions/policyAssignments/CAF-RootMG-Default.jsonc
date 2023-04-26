@@ -61,19 +61,6 @@
             "nodeName": "Logging/",
             "children": [
                 {
-                    "nodeName": "ActivityLogs",
-                    "assignment": {
-                        "name": "Deploy-AzActivity-Log",
-                        "displayName": "Deploy Diagnostic Settings for Activity Log to Log Analytics workspace",
-                        "description": "Ensures that Activity Log Diagnostics settings are set to push logs into Log Analytics workspace."
-                    },
-                    "definitionEntry": {
-                        "policyName": "2465583e-4e78-4c15-b6be-a36cbc7c8b0f",
-                        "friendlyNameToDocumentIfGuid": "Activity Logs"
-                    },
-                    "parameters": {}
-                },
-                {
                     "nodeName": "ResourceDiagnostics",
                     "assignment": {
                         "name": "Deploy-Resource-Diag",
