@@ -28,7 +28,7 @@ stages:
         parameters:
           serviceConnection: $(productionServiceConnection)
           jobName: 'jobPlanProduction'
-          environment: 'production'
+          environment: 'TenantProd'
   
   - stage: deployDevelopmentStage
     displayName: Deploy Policy - ePAC-Test
