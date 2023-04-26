@@ -6,7 +6,7 @@
         "description": "Sets the allowed locations"
     },
     "definitionEntry": {
-        "policySetName": "general-allowed-locations-policy-set",
+        "policySetName": "general-allowed-locations-policy-set"
     },
     "parameters": {
         "AllowedLocations": [
@@ -14,11 +14,11 @@
         ]
     },
     "scope": {
-        "development": [
-            "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+        "TenantProd": [
+            "/providers/Microsoft.Management/managementGroups/10b8675c-2742-4319-8b35-e3f8a3dc31d4"
         ],
-        "production": [
-            "/providers/Microsoft.Management/managementGroups/mg-identity"
+        "ePAC-Test": [
+            "/providers/Microsoft.Management/managementGroups/mg-epac-test"
         ]
     }
 }

@@ -12,9 +12,7 @@
         "type": "Array",
         "defaultValue": [
           "westeurope",
-          "northeurope",
-          "uksouth",
-          "ukwest"
+          "northeurope"
         ]
       }
     },

@@ -18,12 +18,12 @@ stages:
         parameters:
           serviceConnection: $(developmentServiceConnection)
           jobName: 'jobPlanDevelopment'
-          environment: 'development'
+          environment: 'ePAC-Test'
           publishPlan: false
 
       - template: templates/job-build-deployment-plan.yml
         parameters:
           serviceConnection: $(productionServiceConnection)
           jobName: 'jobPlanProduction'
-          environment: 'production'
+          environment: 'TenantProd'
           publishPlan: false       

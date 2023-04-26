@@ -22,7 +22,7 @@ stages:
         parameters:
           serviceConnection: $(developmentServiceConnection)
           jobName: 'jobPlanDevelopment'
-          environment: 'development'
+          environment: 'ePAC-Test'
 
       - template: templates/job-build-deployment-plan.yml
         parameters:
@@ -31,7 +31,7 @@ stages:
           environment: 'production'
   
   - stage: deployDevelopmentStage
-    displayName: Deploy Policy - development
+    displayName: Deploy Policy - ePAC-Test
     dependsOn:
       - planStage
     condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanDevelopment.planStep.deployPolicyChanges'], 'yes'))
@@ -39,10 +39,10 @@ stages:
       - template: templates/job-deploy-policies.yml
         parameters:
           serviceConnection: $(developmentServiceConnection)
-          environment: 'development'
+          environment: 'ePAC-Test'
 
   - stage: deployRolesDevelopmentStage
-    displayName: Deploy roles - development
+    displayName: Deploy roles - ePAC-Test
     dependsOn:
       - deployDevelopmentStage
     condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanDevelopment.planStep.deployRoleChanges'], 'yes'))
@@ -50,10 +50,10 @@ stages:
       - template: templates/job-deploy-roles.yml
         parameters:
           serviceConnection: $(developmentServiceConnection)
-          environment: 'development'
+          environment: 'ePAC-Test'
 
   - stage: deployProductionStage
-    displayName: Deploy Policy - production
+    displayName: Deploy Policy - TenantProd
     dependsOn:
       - deployRolesDevelopmentStage
     condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanProduction.planStep.deployPolicyChanges'], 'yes'))
@@ -61,10 +61,10 @@ stages:
       - template: templates/job-deploy-policies.yml
         parameters:
           serviceConnection: $(productionServiceConnection)
-          environment: 'production'
+          environment: 'TenantProd'
 
   - stage: deployRolesProductionStage
-    displayName: Deploy roles - production
+    displayName: Deploy roles - TenantProd
     dependsOn:
       - deployProductionStage
     condition: and(succeeded(), not(canceled()), eq(dependencies.planStage.outputs['jobPlanProduction.planStep.deployRoleChanges'], 'yes'))
@@ -72,4 +72,4 @@ stages:
       - template: templates/job-deploy-roles.yml
         parameters:
           serviceConnection: $(productionServiceConnection)
-          environment: 'production'
+          environment: 'TenantProd'

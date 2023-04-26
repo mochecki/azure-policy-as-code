@@ -2,27 +2,30 @@
     "pacOwnerId": "11111111-2222-3333-4444-555555555555",
     "pacEnvironments": [
         {
-            "pacSelector": "development",
+            "pacSelector": "TenantProd",
             "cloud": "AzureCloud",
             "tenantId": "10b8675c-2742-4319-8b35-e3f8a3dc31d4",
-            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/10b8675c-2742-4319-8b35-e3f8a3dc31d4",
+            "desiredState": {
+                "strategy": "full"    // "ownedOnly", "full"
+            }
         },
         {
-            "pacSelector": "production",
+            "pacSelector": "ePAC-Test",
             "cloud": "AzureCloud",
             "tenantId": "10b8675c-2742-4319-8b35-e3f8a3dc31d4",
-            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/mg-moc-root"
+            "deploymentRootScope": "/providers/Microsoft.Management/managementGroups/mg-epac-test"
         }
     ],
     "managedIdentityLocations": {
         "*": "westeurope"
     },
     "globalNotScopes": {
-        "*": [
-            "/resourceGroupPatterns/excluded-rg*",
+        "TenantProd": [
+            "/providers/Microsoft.Management/managementGroups/mg-epac-test"
         ],
-        "production": [
-            "/providers/Microsoft.Management/managementGroups/mg-epac-dev"
+        "*": [
+            "/resourceGroupPatterns/excluded-rg*"
         ]
     }
 }
