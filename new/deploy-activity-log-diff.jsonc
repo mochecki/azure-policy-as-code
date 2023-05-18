@@ -1,0 +1,37 @@
+{
+    "nodeName": "/Logs/",
+    "assignment": {
+        "name": "Deploy-AzActivity-Log",
+        "displayName": "Deploy Diagnostic Settings for Activity Log to Log Analytics workspace",
+        "description": "Ensures that Activity Log Diagnostics settings are set to push logs into Log Analytics workspace."
+    },
+    "definitionEntry": {
+        "policyName": "2465583e-4e78-4c15-b6be-a36cbc7c8b0f",
+        "friendlyNameToDocumentIfGuid": "Activity Logs"
+    },
+    "children": [
+        {
+            "nodeName": "ePAC-Test/",
+            "parameters":{
+                "logAnalytics": "/subscriptions/70c35140-5472-4889-86a9-40a82c3273fb/resourceGroups/uk-uks-moc-stg-rg-shared-infra/providers/Microsoft.OperationalInsights/workspaces/uk-uks-moc-stg-log-common"
+            },
+            "scope": {
+                "ePAC-Test": [
+                    "/providers/Microsoft.Management/managementGroups/mg-epac-test"
+                ]
+            }
+        },
+        {
+            "nodeName": "TenantProd/",
+            "parameters":{
+                "logAnalytics": "/subscriptions/70c35140-5472-4889-86a9-40a82c3273fb/resourceGroups/uk-uks-moc-stg-rg-shared-infra/providers/Microsoft.OperationalInsights/workspaces/uk-uks-moc-stg-log-common"
+            },
+            "scope": {
+                "TenantProd": [
+                    "/providers/Microsoft.Management/managementGroups/10b8675c-2742-4319-8b35-e3f8a3dc31d4"
+                ]
+            }
+        }
+    ]
+
+}

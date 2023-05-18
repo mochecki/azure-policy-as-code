@@ -1,0 +1,367 @@
+{
+    "properties": {
+        "displayName": "Guest configuration - configureCiphers",
+        "policyType": "Custom",
+        "mode": "Indexed",
+        "description": "Guest configuration - configureCiphers",
+        "metadata": {
+            "category": "Guest Configuration",
+            "version": "0.9.0",
+            "requiredProviders": [
+                "Microsoft.GuestConfiguration"
+            ],
+            "guestConfiguration": {
+                "name": "configureCiphers",
+                "version": "0.9.0",
+                "contentType": "Custom",
+                "contentUri": "https://guestconfigmvp001.blob.core.windows.net/guestconfig/configureCiphers_0_9_0.zip?sv=2021-10-04&se=2028-05-18T02%3A23%3A32Z&sr=b&sp=r&sig=3NPzpOdjZ4LAuNO0zDDjJ%2Bt9VySr4wWjXN5QcSHf674%3D",
+                "contentHash": "5D7B661E763DBF03CB32EAAAD32C0F473ADB7B6977328F1786E51A8C54BB689A"
+            }
+        },
+        "parameters": {
+            "IncludeArcMachines": {
+                "type": "string",
+                "metadata": {
+                    "displayName": "Include Arc connected machines",
+                    "description": "By selecting this option, you agree to be charged monthly per Arc connected machine.",
+                    "portalReview": "true"
+                },
+                "allowedValues": [
+                    "true",
+                    "false"
+                ],
+                "defaultValue": "false"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "anyOf": [
+                    {
+                        "allOf": [
+                            {
+                                "anyOf": [
+                                    {
+                                        "field": "type",
+                                        "equals": "Microsoft.Compute/virtualMachines"
+                                    },
+                                    {
+                                        "field": "type",
+                                        "equals": "Microsoft.Compute/virtualMachineScaleSets"
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "tags['aks-managed-orchestrator']",
+                                "exists": "false"
+                            },
+                            {
+                                "field": "tags['aks-managed-poolName']",
+                                "exists": "false"
+                            },
+                            {
+                                "anyOf": [
+                                    {
+                                        "field": "Microsoft.Compute/imagePublisher",
+                                        "in": [
+                                            "esri",
+                                            "incredibuild",
+                                            "MicrosoftDynamicsAX",
+                                            "MicrosoftSharepoint",
+                                            "MicrosoftVisualStudio",
+                                            "MicrosoftWindowsDesktop",
+                                            "MicrosoftWindowsServerHPCPack"
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "MicrosoftWindowsServer"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageSKU",
+                                                "notLike": "2008*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "MicrosoftSQLServer"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "notLike": "SQL2008*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "microsoft-dsvm"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "like": "dsvm-win*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "microsoft-ads"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "in": [
+                                                    "standard-data-science-vm",
+                                                    "windows-data-science-vm"
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "batch"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "equals": "rendering-windows2016"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "center-for-internet-security-inc"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "like": "cis-windows-server-201*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "pivotal"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "like": "bosh-windows-server*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "Microsoft.Compute/imagePublisher",
+                                                "equals": "cloud-infrastructure-services"
+                                            },
+                                            {
+                                                "field": "Microsoft.Compute/imageOffer",
+                                                "like": "ad*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "anyOf": [
+                                                    {
+                                                        "field": "Microsoft.Compute/virtualMachines/osProfile.windowsConfiguration",
+                                                        "exists": true
+                                                    },
+                                                    {
+                                                        "field": "Microsoft.Compute/virtualMachines/storageProfile.osDisk.osType",
+                                                        "like": "Windows*"
+                                                    },
+                                                    {
+                                                        "field": "Microsoft.Compute/VirtualMachineScaleSets/osProfile.windowsConfiguration",
+                                                        "exists": true
+                                                    },
+                                                    {
+                                                        "field": "Microsoft.Compute/virtualMachineScaleSets/virtualMachineProfile.storageProfile.osDisk.osType",
+                                                        "like": "Windows*"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "anyOf": [
+                                                    {
+                                                        "field": "Microsoft.Compute/imageSKU",
+                                                        "exists": false
+                                                    },
+                                                    {
+                                                        "allOf": [
+                                                            {
+                                                                "field": "Microsoft.Compute/imageOffer",
+                                                                "notLike": "SQL2008*"
+                                                            },
+                                                            {
+                                                                "field": "Microsoft.Compute/imageSKU",
+                                                                "notLike": "2008*"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "allOf": [
+                            {
+                                "value": "[parameters('IncludeArcMachines')]",
+                                "equals": true
+                            },
+                            {
+                                "anyOf": [
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "type",
+                                                "equals": "Microsoft.HybridCompute/machines"
+                                            },
+                                            {
+                                                "field": "Microsoft.HybridCompute/imageOffer",
+                                                "like": "windows*"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "field": "type",
+                                                "equals": "Microsoft.ConnectedVMwarevSphere/virtualMachines"
+                                            },
+                                            {
+                                                "field": "Microsoft.ConnectedVMwarevSphere/virtualMachines/osProfile.osType",
+                                                "like": "windows*"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "then": {
+                "effect": "deployIfNotExists",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/088ab73d-1256-47ae-bea9-9de8e7131f31"
+                    ],
+                    "type": "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+                    "name": "[concat('configureCiphers$pid', uniqueString(policy().assignmentId, policy().definitionReferenceId))]",
+                    "existenceCondition": {
+                        "field": "Microsoft.GuestConfiguration/guestConfigurationAssignments/complianceStatus",
+                        "equals": "Compliant"
+                    },
+                    "deployment": {
+                        "properties": {
+                            "mode": "incremental",
+                            "parameters": {
+                                "vmName": {
+                                    "value": "[field('name')]"
+                                },
+                                "location": {
+                                    "value": "[field('location')]"
+                                },
+                                "type": {
+                                    "value": "[field('type')]"
+                                },
+                                "assignmentName": {
+                                    "value": "[concat('configureCiphers$pid', uniqueString(policy().assignmentId, policy().definitionReferenceId))]"
+                                }
+                            },
+                            "template": {
+                                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                                "contentVersion": "1.0.0.0",
+                                "parameters": {
+                                    "vmName": {
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string"
+                                    },
+                                    "assignmentName": {
+                                        "type": "string"
+                                    }
+                                },
+                                "resources": [
+                                    {
+                                        "condition": "[equals(toLower(parameters('type')), toLower('Microsoft.Compute/virtualMachines'))]",
+                                        "apiVersion": "2018-11-20",
+                                        "type": "Microsoft.Compute/virtualMachines/providers/guestConfigurationAssignments",
+                                        "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('assignmentName'))]",
+                                        "location": "[parameters('location')]",
+                                        "properties": {
+                                            "guestConfiguration": {
+                                                "name": "configureCiphers",
+                                                "version": "0.9.0",
+                                                "contentType": "Custom",
+                                                "contentUri": "https://guestconfigmvp001.blob.core.windows.net/guestconfig/configureCiphers_0_9_0.zip?sv=2021-10-04&se=2028-05-18T02%3A23%3A32Z&sr=b&sp=r&sig=3NPzpOdjZ4LAuNO0zDDjJ%2Bt9VySr4wWjXN5QcSHf674%3D",
+                                                "contentHash": "5D7B661E763DBF03CB32EAAAD32C0F473ADB7B6977328F1786E51A8C54BB689A",
+                                                "assignmentType": "ApplyAndAutoCorrect"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "condition": "[equals(toLower(parameters('type')), toLower('Microsoft.HybridCompute/machines'))]",
+                                        "apiVersion": "2018-11-20",
+                                        "type": "Microsoft.HybridCompute/machines/providers/guestConfigurationAssignments",
+                                        "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('assignmentName'))]",
+                                        "location": "[parameters('location')]",
+                                        "properties": {
+                                            "guestConfiguration": {
+                                                "name": "configureCiphers",
+                                                "version": "0.9.0",
+                                                "contentType": "Custom",
+                                                "contentUri": "https://guestconfigmvp001.blob.core.windows.net/guestconfig/configureCiphers_0_9_0.zip?sv=2021-10-04&se=2028-05-18T02%3A23%3A32Z&sr=b&sp=r&sig=3NPzpOdjZ4LAuNO0zDDjJ%2Bt9VySr4wWjXN5QcSHf674%3D",
+                                                "contentHash": "5D7B661E763DBF03CB32EAAAD32C0F473ADB7B6977328F1786E51A8C54BB689A",
+                                                "assignmentType": "ApplyAndAutoCorrect"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "condition": "[equals(toLower(parameters('type')), toLower('Microsoft.Compute/virtualMachineScaleSets'))]",
+                                        "apiVersion": "2018-11-20",
+                                        "type": "Microsoft.Compute/virtualMachineScaleSets/providers/guestConfigurationAssignments",
+                                        "name": "[concat(parameters('vmName'), '/Microsoft.GuestConfiguration/', parameters('assignmentName'))]",
+                                        "location": "[parameters('location')]",
+                                        "properties": {
+                                            "guestConfiguration": {
+                                                "name": "configureCiphers",
+                                                "version": "0.9.0",
+                                                "contentType": "Custom",
+                                                "contentUri": "https://guestconfigmvp001.blob.core.windows.net/guestconfig/configureCiphers_0_9_0.zip?sv=2021-10-04&se=2028-05-18T02%3A23%3A32Z&sr=b&sp=r&sig=3NPzpOdjZ4LAuNO0zDDjJ%2Bt9VySr4wWjXN5QcSHf674%3D",
+                                                "contentHash": "5D7B661E763DBF03CB32EAAAD32C0F473ADB7B6977328F1786E51A8C54BB689A",
+                                                "assignmentType": "ApplyAndAutoCorrect"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "name": "c328ff5e-ffff-48bd-ae76-d6e6da29bf3b"
+}
